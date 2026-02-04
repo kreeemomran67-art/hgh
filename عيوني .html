@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى أميرتي آلاء ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --red: #ff2e63; --gold: #f9d342; --dark: #080808; --glass: rgba(255, 255, 255, 0.05); }
+        
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; font-family: 'Cairo', sans-serif; background: var(--dark); color: white; overflow-x: hidden; scroll-behavior: smooth; }
+
+        /* شاشة القفل */
+        #lock-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
+            display: flex; justify-content: center; align-items: center; z-index: 10000;
+        }
+        .lock-box { 
+            background: var(--glass); padding: 50px; border-radius: 30px; 
+            backdrop-filter: blur(15px); text-align: center; border: 1px solid var(--red);
+            box-shadow: 0 0 50px rgba(255, 46, 99, 0.2);
+        }
+        input { 
+            padding: 15px; border-radius: 50px; border: 1px solid var(--red); 
+            background: transparent; color: white; text-align: center; 
+            font-size: 1.3rem; margin-bottom: 20px; width: 220px; outline: none; 
+        }
+        .unlock-btn { 
+            background: var(--red); color: white; border: none; padding: 15px 45px; 
+            border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1.2rem; transition: 0.3s;
+        }
+
+        /* المحتوى الرئيسي */
+        #main-content { display: none; opacity: 0; transition: 2s; }
+
+        /* قسم الهيرو */
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center; 
+            align-items: center; text-align: center; position: relative;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1350&q=80') center/cover;
+        }
+        .hero h1 { font-family: 'Reem Kufi'; font-size: 5rem; color: var(--red); margin: 0; text-shadow: 0 0 20px rgba(255,46,99,0.5); }
+        
+        /* العداد */
+        .counter-container { margin: 30px 0; background: var(--glass); padding: 20px; border-radius: 20px; border: 1px solid var(--gold); }
+        .counter-title { color: var(--gold); font-size: 1.5rem; margin-bottom: 15px; }
+        .timer { display: flex; gap: 15px; font-weight: bold; font-size: 1.2rem; }
+        .timer-unit { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; min-width: 80px; }
+        .timer-unit span { display: block; font-size: 2rem; color: var(--red); }
+
+        /* قسم الصور والديناميكية */
+        .section { padding: 100px 20px; max-width: 1000px; margin: 0 auto; }
+        .card { 
+            margin-bottom: 100px; opacity: 0; transform: translateY(50px); transition: all 1s ease-out; 
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .card.active { opacity: 1; transform: translateY(0); }
+        .card img { 
+            width: 100%; border-radius: 20px; border: 5px solid var(--glass);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); margin-bottom: 30px;
+        }
+        .card h3 { font-family: 'Reem Kufi'; font-size: 2.5rem; color: var(--gold); margin: 0; }
+        .card p { font-size: 1.4rem; line-height: 1.8; color: #ccc; text-align: center; }
+
+        /* الفيديوهات */
+        .video-box { 
+            width: 100%; border-radius: 20px; overflow: hidden; border: 2px solid var(--red);
+            margin: 30px 0; box-shadow: 0 0 30px rgba(255,46,99,0.3);
+        }
+        iframe { width: 100%; aspect-ratio: 16/9; border: none; }
+
+        .footer { padding: 150px 20px; text-align: center; background: linear-gradient(transparent, #200); }
+        .footer h2 { font-family: 'Reem Kufi'; font-size: 6rem; color: var(--red); animation: heartBeat 1.5s infinite; }
+        @keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .timer { gap: 5px; }
+            .timer-unit { min-width: 60px; font-size: 0.9rem; }
+            .timer-unit span { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <div class="lock-box">
+            <h2 style="color: white; margin-bottom: 25px; font-family: 'Reem Kufi';">اكتبي تاريخ يومنا المميز يا لولو ❤️</h2>
+            <input type="text" id="passInput" placeholder="14/2"> <br>
+            <button class="unlock-btn" onclick="init()">افتحي قلبي</button>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <section class="hero">
+            <h1>بحبك يا آلاء</h1>
+            
+            <div class="counter-container">
+                <div class="counter-title">إحنا سوا بقالنا:</div>
+                <div class="timer" id="timer">
+                    <div class="timer-unit"><span id="days">0</span>يوم</div>
+                    <div class="timer-unit"><span id="hours">0</span>ساعة</div>
+                    <div class="timer-unit"><span id="minutes">0</span>دقيقة</div>
+                    <div class="timer-unit"><span id="seconds">0</span>ثانية</div>
+                </div>
+            </div>
+
+            <p>من كارم.. لأحلى حكاية في عمري</p>
+            
+            <div class="video-box" style="max-width: 450px;">
+                <iframe src="https://www.youtube.com/embed/T0AA8GvHzhY" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1516589174184-c68d8e41d302?auto=format&fit=crop&w=800&q=80" alt="رومانسية">
+                <h3>أول مرة شوفتك</h3>
+                <p>من يوم 26/7 وحياتي اتغيرت 180 درجة.. اليوم ده هو البداية الحقيقية لعمري يا آلاء. وجودك هو اللي بيخلي لأيامي طعم.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=800&q=80" alt="حب">
+                <h3>ضحكتك هي دنيتي</h3>
+                <p>لما بتضحكي بحس إن المشاكل كلها خلصت.. خليكي دايمًا منورة حياتي بضحكتك اللي مفيش زيها في الدنيا يا لولو.</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?auto=format&fit=crop&w=800&q=80" alt="وعد">
+                <h3>وعد بالحب</h3>
+                <p>بوعدك إني هفضل دايمًا السند والضهر.. مش هسمح لأي حاجة تضايقك أبداً. إنتي الملكة في قلبي يا آلاء وهتفضلي كدة للأبد.</p>
+            </div>
+
+            <h2 style="color: var(--gold); text-align: center; font-family: 'Reem Kufi'; font-size: 2.5rem; margin-top: 50px;">إهداء رامي صبري ليكي</h2>
+            <div class="video-box">
+                <iframe src="https://www.youtube.com/embed/o4XJ-tZmZKk" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="footer">
+            <h2>بحبك يا آلاء ❤️</h2>
+            <p style="color: var(--gold); font-size: 2rem;">كارم بيعشقك للأبد</p>
+        </section>
+    </div>
+
+    <script>
+        // تاريخ بداية الحب: 26/7 (هنفترض السنة اللي فاتت 2025)
+        const startDate = new Date("July 26, 2025 00:00:00").getTime();
+
+        function updateCounter() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d;
+            document.getElementById("hours").innerText = h;
+            document.getElementById("minutes").innerText = m;
+            document.getElementById("seconds").innerText = s;
+        }
+
+        function init() {
+            const pass = document.getElementById('passInput').value;
+            if(pass === "14/2") {
+                document.getElementById('lock-screen').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => { main.style.opacity = '1'; }, 100);
+                
+                setInterval(updateCounter, 1000); // تشغيل العداد
+                
+                // مراقبة السكرول عشان الصور تظهر بحركة
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+                }, { threshold: 0.2 });
+                document.querySelectorAll('.card').forEach(c => observer.observe(c));
+            } else {
+                alert("الباسورد غلط يا لولو.. ركزي 😉");
+            }
+        }
+    </script>
+</body>
+</html>
